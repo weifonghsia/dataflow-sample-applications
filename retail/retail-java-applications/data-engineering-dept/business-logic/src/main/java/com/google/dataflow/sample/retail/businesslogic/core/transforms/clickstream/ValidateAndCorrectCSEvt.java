@@ -52,14 +52,11 @@ import org.apache.beam.sdk.values.TypeDescriptors;
 @Experimental
 public class ValidateAndCorrectCSEvt extends PTransform<PCollection<Row>, PCollection<Row>> {
 
-  public static final TupleTag<Row> MAIN = new TupleTag<Row>() {
-  };
+  public static final TupleTag<Row> MAIN = new TupleTag<Row>() {};
 
-  public static final TupleTag<ErrorMsg> DEAD_LETTER = new TupleTag<ErrorMsg>() {
-  };
+  public static final TupleTag<ErrorMsg> DEAD_LETTER = new TupleTag<ErrorMsg>() {};
 
-  public static final TupleTag<Row> NEEDS_CORRECTIONS = new TupleTag<Row>() {
-  };
+  public static final TupleTag<Row> NEEDS_CORRECTIONS = new TupleTag<Row>() {};
 
   private final DeadLetterSink.SinkType sinkType;
 
@@ -133,7 +130,8 @@ public class ValidateAndCorrectCSEvt extends PTransform<PCollection<Row>, PColle
         PCollectionList.of(validatedCollections.get(MAIN).setRowSchema(wrapperSchema))
             .and(eventDateTimeFixed)
             .apply("CombineValidAndCorrectedEvents", Flatten.pCollections())
-            .apply("RestoreOriginalSchema",
+            .apply(
+                "RestoreOriginalSchema",
                 MapElements.into(TypeDescriptors.rows()).via(x -> x.getRow("data")))
             .setRowSchema(input.getSchema());
 
