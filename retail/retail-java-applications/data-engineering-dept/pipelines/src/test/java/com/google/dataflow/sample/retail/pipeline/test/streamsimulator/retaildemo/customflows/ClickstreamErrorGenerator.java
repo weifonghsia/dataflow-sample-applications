@@ -15,11 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.customflows;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.customflows;
 
-import com.google.devrel.dataflow.demo.retail.businesslogic.utils.DataObjectUtils;
-import com.google.devrel.dataflow.demo.retail.schemas.business.ClickStream.ClickStreamEventAVRO;
-import com.google.devrel.dataflow.streamsimulator.datatypes.PipelineInternalDataTypes.Event;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.ClickStreamEventAVRO;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.datatypes.PipelineInternalDataTypes.Event;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.beam.sdk.io.GenerateSequence;
 import org.apache.beam.sdk.transforms.DoFn;
@@ -69,16 +68,16 @@ public class ClickstreamErrorGenerator
                       pc.output(event1);
                     }
 
-                    ClickStreamEventAVRO missingUID = DataObjectUtils.copyAVRO(clilckErrorEvent);
+                    ClickStreamEventAVRO missingUID = copyAVRO(clilckErrorEvent);
                     missingUID.uid = null;
-                    missingUID.sessionId = ThreadLocalRandom.current().nextLong();
+                    missingUID.sessionId = String.valueOf(ThreadLocalRandom.current().nextLong());
                     Event<ClickStreamEventAVRO> event2 = new Event<>();
                     event2.timestamp = missingUID.timestamp;
                     event2.data = missingUID;
 
                     pc.output(event2);
 
-                    ClickStreamEventAVRO missingLatLng = DataObjectUtils.copyAVRO(clilckErrorEvent);
+                    ClickStreamEventAVRO missingLatLng = copyAVRO(clilckErrorEvent);
                     Event<ClickStreamEventAVRO> event3 = new Event<>();
                     event3.timestamp = missingLatLng.timestamp;
                     event3.data = missingLatLng;
@@ -86,5 +85,23 @@ public class ClickstreamErrorGenerator
                     pc.output(event3);
                   }
                 }));
+  }
+
+  public static ClickStreamEventAVRO copyAVRO(ClickStreamEventAVRO from) {
+    ClickStreamEventAVRO to = new ClickStreamEventAVRO();
+
+    to.timestamp = from.timestamp;
+    to.uid = from.uid;
+    to.sessionId = from.sessionId;
+    to.returning = from.returning;
+    to.pageRef = from.pageRef;
+    to.pageTarget = from.pageTarget;
+    to.lat = from.lat;
+    to.lng = from.lng;
+    to.agent = from.agent;
+    to.event = from.event;
+    to.transaction = from.transaction;
+
+    return to;
   }
 }

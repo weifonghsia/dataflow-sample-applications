@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.customflows;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.customflows;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.beam.sdk.io.GenerateSequence;

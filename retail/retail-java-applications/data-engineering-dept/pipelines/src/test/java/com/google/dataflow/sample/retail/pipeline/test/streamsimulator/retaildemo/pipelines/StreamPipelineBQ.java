@@ -15,23 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.pipelines;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.pipelines;
 
-import com.google.common.collect.ImmutableList;
-import com.google.devrel.dataflow.demo.retail.schemas.business.ClickStream.ClickStreamEventAVRO;
-import com.google.devrel.dataflow.demo.retail.schemas.business.Inventory.InventoryAVRO;
-import com.google.devrel.dataflow.demo.retail.schemas.business.Transaction.TransactionsAvro;
-import com.google.devrel.dataflow.streamsimulator.DataCache;
-import com.google.devrel.dataflow.streamsimulator.DataRegulator;
-import com.google.devrel.dataflow.streamsimulator.DataRegulator.QueryWindow;
-import com.google.devrel.dataflow.streamsimulator.coders.EventCoder;
-import com.google.devrel.dataflow.streamsimulator.datatypes.PipelineInternalDataTypes.Event;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.customflows.ClickstreamBrokenJSONGenerator;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.customflows.ClickstreamErrorGenerator;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.readers.ClickStreamDataReader;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.readers.InventoryDataReader;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.readers.TransactionsDataReader;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.utils.RetailDemoUtils.ConvertEventAVROToPubSubMessage;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.ClickStreamEventAVRO;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.InventoryAVRO;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.TransactionsAvro;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.DataCache;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.DataRegulator;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.DataRegulator.QueryWindow;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.coders.EventCoder;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.customflows.ClickstreamBrokenJSONGenerator;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.customflows.ClickstreamErrorGenerator;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.datatypes.PipelineInternalDataTypes.Event;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers.ClickStreamDataReader;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers.InventoryDataReader;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers.TransactionsDataReader;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.utils.RetailDemoUtils.ConvertEventAVROToPubSubMessage;
 import org.apache.beam.runners.dataflow.DataflowRunner;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.AvroCoder;
@@ -65,9 +64,9 @@ public class StreamPipelineBQ {
     Pipeline p = Pipeline.create(options);
 
     options.setRunner(DataflowRunner.class);
-    //options.setRegion("us-east1");
-    //options.setMaxNumWorkers(4);
-    //options.setExperiments(ImmutableList.of("min_num_workers=2", "enable_streaming_engine"));
+    // options.setRegion("us-east1");
+    // options.setMaxNumWorkers(4);
+    // options.setExperiments(ImmutableList.of("min_num_workers=2", "enable_streaming_engine"));
 
     // Starting point for the streaming data and the historical data load
     Instant now = Instant.now();

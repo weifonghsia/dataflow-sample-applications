@@ -15,18 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.readers;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers;
 
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.TableResult;
 import com.google.common.collect.ImmutableMap;
-import com.google.devrel.dataflow.demo.retail.businesslogic.core.utils.BigQueryUtil;
-import com.google.devrel.dataflow.demo.retail.schemas.business.Transaction.TransactionsAvro;
-import com.google.devrel.dataflow.streamsimulator.DataRegulator.QueryWindow;
-import com.google.devrel.dataflow.streamsimulator.datatypes.PipelineInternalDataTypes.Event;
-import com.google.devrel.dataflow.streamsimulator.retaildemo.pipelines.RetailDemoStreamInjectorOptions;
-import com.google.devrel.dataflow.streamsimulator.utils.BQSQLUtil;
-import com.google.devrel.dataflow.streamsimulator.utils.InjectorUtils;
+import com.google.dataflow.sample.retail.businesslogic.core.utils.BigQueryUtil;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.TransactionsAvro;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.DataRegulator.QueryWindow;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.datatypes.PipelineInternalDataTypes.Event;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.pipelines.RetailDemoStreamInjectorOptions;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.utils.BQSQLUtil;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.utils.InjectorUtils;
 import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubMessage;

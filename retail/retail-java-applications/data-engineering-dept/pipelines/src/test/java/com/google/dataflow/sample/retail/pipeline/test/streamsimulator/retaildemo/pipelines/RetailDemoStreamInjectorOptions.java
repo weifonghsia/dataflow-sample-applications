@@ -15,11 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.pipelines;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.pipelines;
 
-import com.google.devrel.dataflow.streamsimulator.StreamInjectorOptions;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.StreamInjectorOptions;
 import org.apache.beam.runners.dataflow.options.DataflowPipelineOptions;
-import org.apache.beam.sdk.options.Default;
 
 public interface RetailDemoStreamInjectorOptions
     extends DataflowPipelineOptions, StreamInjectorOptions {

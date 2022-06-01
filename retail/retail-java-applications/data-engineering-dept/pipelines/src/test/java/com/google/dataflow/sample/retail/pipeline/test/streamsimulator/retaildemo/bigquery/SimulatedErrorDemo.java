@@ -15,10 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.startup;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.bigquery;
 
-public class InventoryTrueUp {
-  // Using startup time find the first stock per product update
-  // Add all transactions from now until then per stock per product
-  //
-}
+public class SimulatedErrorDemo {}

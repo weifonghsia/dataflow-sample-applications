@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.devrel.dataflow.streamsimulator.retaildemo.utils;
+package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.utils;
 
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
@@ -26,7 +26,7 @@ import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.Table;
 import com.google.cloud.bigquery.TableResult;
 import com.google.common.collect.ImmutableMap;
-import com.google.devrel.dataflow.demo.retail.schemas.core.Events;
+import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.core.Events;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.UnsupportedEncodingException;
