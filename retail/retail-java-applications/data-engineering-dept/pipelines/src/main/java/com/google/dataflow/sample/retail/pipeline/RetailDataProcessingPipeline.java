@@ -17,7 +17,7 @@
  */
 package com.google.dataflow.sample.retail.pipeline;
 
-import static org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.dataflow.sample.retail.businesslogic.core.options.RetailPipelineOptions;
 import com.google.dataflow.sample.retail.businesslogic.core.transforms.clickstream.ClickstreamProcessing;

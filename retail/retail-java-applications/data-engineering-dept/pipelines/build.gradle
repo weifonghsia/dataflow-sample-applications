@@ -24,12 +24,56 @@ ext.summary = "Pipelines composition."
 
 dependencies {
     // Main
-    compile project(':data-engineering-dept:data-objects')
-    compile project(':data-engineering-dept:business-logic')
+    implementation project(':data-engineering-dept:data-objects')
+    implementation project(':data-engineering-dept:business-logic')
+    // Work around for dependency issue
+    //implementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
+    // Beam Dependencies
+    //implementation group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "${beamVersion}"
+    //implementation group: 'org.apache.beam', name: 'beam-runners-google-cloud-dataflow-java', version: "${beamVersion}"
+    //implementation group: 'org.apache.beam', name: 'beam-runners-direct-java', version: "${beamVersion}"
+    //implementation group: 'org.apache.beam', name: 'beam-sdks-java-extensions-sql', version:  "${beamVersion}"
+    //implementation group: 'com.google.cloud.bigtable', name: 'bigtable-hbase-beam', version :'1.11.0'
+    // https://mvnrepository.com/artifact/org.apache.beam/beam-sdks-java-core
+    //implementation 'com.google.code.gson:gson:2.9.0'
+    // BigQuery direct client
+    //implementation 'com.google.cloud:google-cloud-bigquery:1.88.0'
 
     // Test
-    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.7'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile project(':data-engineering-dept:business-logic').sourceSets.test.output
+    //implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.7'
+    // group: 'junit', name: 'junit', version: '4.12'
+    // BigQuery direct client
+    //testImplementation 'com.google.cloud:google-cloud-bigquery:1.88.0'
+    testImplementation project(':data-engineering-dept:business-logic').sourceSets.test.output
+}
+// Shadowing Test Sources and Dependencies
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.pipelines.StreamPipelineBQ'
+    }
+}
+
+task testJar(type: Jar) {
+    duplicatesStrategy= DuplicatesStrategy.EXCLUDE
+    zip64 true
+    manifest = jar.manifest
+    classifier = 'tests'
+    //from sourceSets.main.output , sourceSets.test.output
+    from sourceSets.test.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+    with jar
+
+    //exclude 'META-INF/NOTICE'
+    //exclude 'META-INF/LICENSE'
+    //exclude 'META-INF/DEPENDENCIES'
+    //exclude 'META-INF/services/*'
+    //exclude 'META-INF/INDEX.LIST'
+    //exclude 'META-INF/maven/org.apache.beam/beam-runners-java-fn-execution/*'
+    //exclude 'META-INF/maven/org.apache.beam/beam-runners-core-java/*'
+    //exclude 'META-INF/maven/org.apache.beam/beam-runners-core-construction-java/*'
 }
 

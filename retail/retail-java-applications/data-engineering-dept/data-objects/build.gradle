@@ -26,12 +26,12 @@ ext.summary = "Data Objects used by all modules, within the pipeline and for I/O
 
 dependencies {
     // Main
-    compile group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "${beamVersion}"
+    //implementation group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "${beamVersion}"
 
     // -- AutoValue
-    annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
-    compile             "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
+    //annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
+    //implementation "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
 
     // Test
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

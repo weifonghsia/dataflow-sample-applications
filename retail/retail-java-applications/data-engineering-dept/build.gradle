@@ -22,10 +22,3 @@ plugins {
 }
 
 sourceCompatibility = 1.8
-
-dependencies {
-    // Enable code formatting
-    compile 'com.google.googlejavaformat:google-java-format:1.7'
-}
-
-
