@@ -78,13 +78,13 @@ public abstract class Purchase {
   public @Nullable abstract String getItemId();
 
   @SchemaFieldName("value")
-  public @Nullable abstract String getPrice();
+  public @Nullable abstract Float getPrice();
 
   @SchemaFieldName("tax")
-  public @Nullable abstract String getItemBrand();
+  public @Nullable abstract Float getItemBrand();
 
   @SchemaFieldName("shipping")
-  public @Nullable abstract String getItemCat01();
+  public @Nullable abstract Float getItemCat01();
 
   @SchemaFieldName("currency")
   public @Nullable abstract String getItemCat02();
@@ -103,11 +103,11 @@ public abstract class Purchase {
 
     public abstract Builder setItemId(String newItemId);
 
-    public abstract Builder setPrice(String newPrice);
+    public abstract Builder setPrice(Float newPrice);
 
-    public abstract Builder setItemBrand(String newItemBrand);
+    public abstract Builder setItemBrand(Float newItemBrand);
 
-    public abstract Builder setItemCat01(String newItemCat01);
+    public abstract Builder setItemCat01(Float newItemCat01);
 
     public abstract Builder setItemCat02(String newItemCat02);
 

@@ -19,6 +19,7 @@ package com.google.dataflow.sample.retail.pipeline;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ImmutableList;
 import com.google.dataflow.sample.retail.businesslogic.core.options.RetailPipelineOptions;
 import com.google.dataflow.sample.retail.businesslogic.core.transforms.clickstream.ClickstreamProcessing;
 import com.google.dataflow.sample.retail.businesslogic.core.transforms.clickstream.WriteAggregationToBigQuery;
@@ -191,7 +192,10 @@ public class RetailDataProcessingPipeline {
 
     RetailPipelineOptions options =
         PipelineOptionsFactory.fromArgs(args).withValidation().as(RetailPipelineOptions.class);
+
+    options.setExperiments(ImmutableList.of("min_num_workers=2", "enable_streaming_engine"));
     Pipeline p = Pipeline.create(options);
+
 
     new RetailDataProcessingPipeline().startRetailPipeline(p);
   }

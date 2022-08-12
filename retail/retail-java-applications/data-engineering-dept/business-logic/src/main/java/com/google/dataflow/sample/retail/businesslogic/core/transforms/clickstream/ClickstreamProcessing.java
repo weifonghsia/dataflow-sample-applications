@@ -121,6 +121,7 @@ public class ClickstreamProcessing extends PTransform<PCollection<String>, PColl
     if (options.getTestModeEnabled()) {
       cleanCSRow.apply(ParDo.of(new Print<>("StoreCleanedDataToDW: ")));
     } else {
+      //cleanCSRow.apply(ParDo.of(new Print<>("cleanCS: ")));
       cleanCSRow.apply(
           "StoreCleanedDataToDW",
           BigQueryIO.<Row>write()
@@ -151,6 +152,7 @@ public class ClickstreamProcessing extends PTransform<PCollection<String>, PColl
     if (options.getTestModeEnabled()) {
       sessionizedCS.apply(ParDo.of(new Print<>("Sessionized Data is: ")));
     } else {
+      //sessionizedCS.apply(ParDo.of(new Print<>("Sessionized Data is: ")));
       sessionizedCS.apply(
           "sessionizedClickstream",
           BigQueryIO.<Row>write()
@@ -178,9 +180,10 @@ public class ClickstreamProcessing extends PTransform<PCollection<String>, PColl
      *
      * <p>*********************************************************************************************
      */
+    //cleanDataWithOutErrorEvents.apply(ParDo.of(new Print<>("cleanData Data is: ")));
     PCollection<PageViewAggregator> pageViewAggregator =
         cleanDataWithOutErrorEvents.apply(new CountViewsPerProduct(Duration.standardSeconds(5)));
-
+    pageViewAggregator.apply(ParDo.of(new Print<>("aggview Data is: ")));
     /**
      * *********************************************************************************************
      * Export page view aggregates to BigTable & BigQuery

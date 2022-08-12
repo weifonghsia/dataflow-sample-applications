@@ -121,7 +121,7 @@ public class ClickStreamDataReader
     // Future date timestamp
     Instant futureTime =
         BQSQLUtil.switchDatePartOfTimeToToday(
-            new Instant(fieldValues.get("timestamp").getTimestampValue() / 1000L));
+            new Instant(fieldValues.get("timestamp").getTimestampValue() / 1000000000L));
     event.timestamp = futureTime.getMillis();
     clickEvent.timestamp = futureTime.getMillis();
 

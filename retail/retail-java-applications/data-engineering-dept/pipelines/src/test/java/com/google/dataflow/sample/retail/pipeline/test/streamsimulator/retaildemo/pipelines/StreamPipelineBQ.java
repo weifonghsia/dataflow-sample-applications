@@ -31,6 +31,7 @@ import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildem
 import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers.InventoryDataReader;
 import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.readers.TransactionsDataReader;
 import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.utils.RetailDemoUtils.ConvertEventAVROToPubSubMessage;
+import com.google.common.collect.ImmutableList;
 import org.apache.beam.runners.dataflow.DataflowRunner;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.AvroCoder;
@@ -59,14 +60,20 @@ public class StreamPipelineBQ {
 
   public static void main(String[] args) throws Exception {
     // Setup Pipeline
+    for (String arg: args) {
+      System.out.println(arg);
+    }
+
+
     RetailDemoStreamInjectorOptions options =
-        PipelineOptionsFactory.create().as(RetailDemoStreamInjectorOptions.class);
+        PipelineOptionsFactory.fromArgs(args).as(RetailDemoStreamInjectorOptions.class);
     Pipeline p = Pipeline.create(options);
 
+
     options.setRunner(DataflowRunner.class);
-    // options.setRegion("us-east1");
+    // options.setRegion("us-central1");
     // options.setMaxNumWorkers(4);
-    // options.setExperiments(ImmutableList.of("min_num_workers=2", "enable_streaming_engine"));
+    options.setExperiments(ImmutableList.of("min_num_workers=2", "enable_streaming_engine"));
 
     // Starting point for the streaming data and the historical data load
     Instant now = Instant.now();
@@ -98,6 +105,7 @@ public class StreamPipelineBQ {
         event
             .apply(new DataCache<ClickStreamEventAVRO>())
             .apply(
+                "Convert Event",
                 ParDo.of(
                     new ConvertEventAVROToPubSubMessage<ClickStreamEventAVRO>(
                         ClickStreamEventAVRO.class)));
@@ -112,6 +120,7 @@ public class StreamPipelineBQ {
         transactionEvents
             .apply(new DataCache<TransactionsAvro>())
             .apply(
+                "Convert Transactions",
                 ParDo.of(
                     new ConvertEventAVROToPubSubMessage<TransactionsAvro>(TransactionsAvro.class)));
 
@@ -125,6 +134,7 @@ public class StreamPipelineBQ {
         inventoryEvents
             .apply(new DataCache<InventoryAVRO>())
             .apply(
+                "Convert Inventory",
                 ParDo.of(new ConvertEventAVROToPubSubMessage<InventoryAVRO>(InventoryAVRO.class)));
 
     // Push data into PubSub

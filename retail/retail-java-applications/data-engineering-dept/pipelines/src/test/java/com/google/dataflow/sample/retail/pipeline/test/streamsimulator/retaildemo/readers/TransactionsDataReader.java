@@ -20,6 +20,7 @@ package com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retailde
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.TableResult;
 import com.google.common.collect.ImmutableMap;
+import com.google.dataflow.sample.retail.businesslogic.core.options.RetailPipelineOptions;
 import com.google.dataflow.sample.retail.businesslogic.core.utils.BigQueryUtil;
 import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.AvroDataObjects.TransactionsAvro;
 import com.google.dataflow.sample.retail.pipeline.test.streamsimulator.retaildemo.DataRegulator.QueryWindow;
@@ -43,6 +44,9 @@ public class TransactionsDataReader
 
   @Override
   public PCollection<Event<TransactionsAvro>> expand(PCollection<QueryWindow> input) {
+    RetailPipelineOptions options =
+        input.getPipeline().getOptions().as(RetailPipelineOptions.class);
+
     String table =
         input
             .getPipeline()
@@ -56,10 +60,15 @@ public class TransactionsDataReader
                     x -> {
                       return InjectorUtils.getQuery(table, x);
                     }))
-        .apply(ParDo.of(new FetchClickStream()));
+        .apply(ParDo.of(new FetchClickStream(options.getProject())));
   }
 
   public static class FetchClickStream extends DoFn<String, Event<TransactionsAvro>> {
+    String project;
+
+    public FetchClickStream(String project) {
+      this.project = project;
+    }
 
     @ProcessElement
     public void process(@Element String input, OutputReceiver<Event<TransactionsAvro>> o) {
@@ -70,7 +79,7 @@ public class TransactionsDataReader
 
         TableResult result =
             BigQueryUtil.readDataFromBigQueryUsingQueryString(
-                "instant-insights", input, "StreamRetail");
+                project , input, "StreamRetail");
 
         for (FieldValueList r : result.iterateAll()) {
 

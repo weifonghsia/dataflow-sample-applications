@@ -88,7 +88,7 @@ public class WriteRawJSONMessagesToBigQuery
                     input1 ->
                         new TableRow()
                             .set("json", input1)
-                            .set("processed_timestamp", Instant.now().getMillis() / 1000)));
+                            .set("processed_timestamp", Instant.now().getMillis() / 1000L)));
 
     return input;
   }
